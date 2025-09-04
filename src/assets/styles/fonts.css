@@ -1,0 +1,55 @@
+@font-face {
+  font-family: iranYekan-1100;
+  src: url("/keyboard_tapuri/fonts/IRANYekanX-Heavy.woff2");
+  font-weight: 1100;
+}
+@font-face {
+  font-family: iranYekan-1000;
+  src: url("/keyboard_tapuri/fonts/IRANYekanX-ExtraBlack.woff2");
+  font-weight: 1000;
+}
+@font-face {
+  font-family: iranYekan-900;
+  src: url("/keyboard_tapuri/fonts/IRANYekanX-Black.woff2");
+  font-weight: 900;
+}
+@font-face {
+  font-family: iranYekan-800;
+  src: url("/keyboard_tapuri/fonts/IRANYekanX-ExtraBold.woff2");
+  font-weight: 800;
+}
+@font-face {
+  font-family: iranYekan-700;
+  src: url("/keyboard_tapuri/fonts/IRANYekanX-Bold.woff2");
+  font-weight: 700;
+}
+@font-face {
+  font-family: iranYekan-600;
+  src: url("/keyboard_tapuri/fonts/IRANYekanX-DemiBold.woff2");
+  font-weight: 600;
+}
+@font-face {
+  font-family: iranYekan-500;
+  src: url("/keyboard_tapuri/fonts/IRANYekanX-Medium.woff2");
+  font-weight: 500;
+}
+@font-face {
+  font-family: iranYekan-400;
+  src: url("/keyboard_tapuri/fonts/IRANYekanX-Regular.woff2");
+  font-weight: 400;
+}
+@font-face {
+  font-family: iranYekan-300;
+  src: url("/keyboard_tapuri/fonts/IRANYekanX-Light.woff2");
+  font-weight: 300;
+}
+@font-face {
+  font-family: iranYekan-200;
+  src: url("/keyboard_tapuri/fonts/IRANYekanX-UltraLight.woff2");
+  font-weight: 200;
+}
+@font-face {
+  font-family: iranYekan-100;
+  src: url("/keyboard_tapuri/fonts/IRANYekanX-Thin.woff2");
+  font-weight: 100;
+}
