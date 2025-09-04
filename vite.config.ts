@@ -14,5 +14,5 @@ export default defineConfig({
     },
   },
   // It will be a our domain
-  base: "/keyboard_tapuri/",
+  base: "/keyboard_tapuri",
 });
