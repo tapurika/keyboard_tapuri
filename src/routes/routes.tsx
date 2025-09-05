@@ -1,4 +1,5 @@
 import HomePage from "@/pages/Home";
+import KeyboardPage from "@/pages/Keyboard";
 
 interface IRoutes {
   text: string;
@@ -16,16 +17,15 @@ const ROUTES: IRoutes[] = [
     path: "",
   },
   {
+    text: "کیبرد آنلاین",
+    Element: KeyboardPage,
+    path: "/keyboard",
+  },
+  {
     text: "آموزش صداها",
     Element: HomePage,
     path: "/teaching",
   },
-  {
-    text: "کیبرد آنلاین",
-    Element: HomePage,
-    path: "/keyboard",
-  },
-
   {
     text: "درباره ی ما",
     Element: HomePage,

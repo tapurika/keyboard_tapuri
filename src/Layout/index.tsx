@@ -5,11 +5,11 @@ import Footer from "./Footer";
 export default function Layout() {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <main className="font-iranYekan-400">
         <Outlet />
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }
