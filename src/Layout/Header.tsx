@@ -17,8 +17,9 @@ export default function Header() {
     <header className={styles.root}>
       <div className="flex items-center gap-10">
         <Link to={"/"}>خانه</Link>
-        <Link to={"/keyboard"}>کیبرد</Link>
-        <Link to={"/teaching"}>آموزش اصوات</Link>
+        <Link to={"/keyboard"}>کیبرد آنلاین</Link>
+        <Link to={"/teaching"}>آموزش اصوات طبری</Link>
+        <Link to={"/about-us"}>درباره ی ما</Link>
       </div>
       <div className="flex items-center gap-6">
         <span className="text-white font-iranYekan-900 ">طـبری کـیبرد</span>

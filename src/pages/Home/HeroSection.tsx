@@ -4,8 +4,7 @@ import { Button } from "flowbite-react";
 
 export default function HeroSection() {
   return (
-    <div>
-      {" "}
+    <div className="wrapper">
       <div className="flex justify-between gap-20 mt-32">
         <section className="w-1/2">
           <img
@@ -26,7 +25,7 @@ export default function HeroSection() {
                 {" "}
                 دبیره ی مشرقی{" "}
               </strong>
-              طبری که مختص زبان طبری ساخته شده است.
+              طبری ( که مختص زبان طبری ساخته شده است.) بکار میرود .
               <br />
               این کیبردها با قرار دادن حروف و نشانه‌های ویژه این زبان در
               دسترس‌ترین مکان‌ها، امکان نوشتن صحیح و سریع را برای کاربران فراهم

@@ -18,12 +18,18 @@ const ROUTES: IRoutes[] = [
   {
     text: "آموزش صداها",
     Element: HomePage,
-    path: "/about-us",
+    path: "/teaching",
   },
+  {
+    text: "کیبرد آنلاین",
+    Element: HomePage,
+    path: "/keyboard",
+  },
+
   {
     text: "درباره ی ما",
     Element: HomePage,
-    path: "/teaching",
+    path: "/about-us",
   },
 ];
 
