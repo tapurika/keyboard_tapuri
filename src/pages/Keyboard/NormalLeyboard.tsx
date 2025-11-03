@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 import { TABARI_IR } from "@/constants/tabariWord";
 
@@ -30,6 +30,7 @@ export default function VirtualKeyboard() {
       <div className="grid grid-cols-10 gap-2">
         {numbers.map((num, i) => (
           <button
+            type="button"
             key={i}
             className="p-2 bg-gray-200 rounded hover:bg-gray-300"
             onClick={() => handleKeyClick(num)}
@@ -42,11 +43,12 @@ export default function VirtualKeyboard() {
       <div className="grid grid-cols-8 gap-2">
         {TABARI_IR.map((char, i) => (
           <button
+            type="button"
             key={i}
             className="p-2 bg-gray-200 rounded hover:bg-gray-300"
-            onClick={() => handleKeyClick(char)}
+            onClick={() => handleKeyClick(char.ash)}
           >
-            {char}
+            {char.ash}
           </button>
         ))}
       </div>

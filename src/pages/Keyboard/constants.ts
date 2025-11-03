@@ -1,42 +1,100 @@
 export const Mobile_WORD = [
   [
-    { main: "چ", side: ["1", "۱"] },
-    { main: "ج", side: ["2", "۲"] },
-    { main: "جٰ", side: ["3", "۳"] },
-    { main: "خ", side: ["4", "۴"] },
-    { main: "هـ", side: ["5", "۵"] },
-    { main: "غ", side: ["6", "ڠ", "۶"], bottom: "ڠ" },
-    { main: "ٯ", side: ["7", "۷"] },
-    { main: "ڧ", side: ["8", "۸"] },
-    { main: "ق", side: ["9", "۹"] },
-    { main: "ە", side: ["ەٕ", "0", "۰"] },
-    { main: "ۀ", side: [] },
+    {
+      main: { ir: "چ", la: "C", ash: "" },
+      side: { ir: ["1", "۱"], la: ["1", "۱"], ash: [] },
+    },
+    {
+      main: { ir: "ج", la: "J", ash: "" },
+      side: { ir: ["1", "۱"], la: ["1", "۱"], ash: [] },
+    },
+    {
+      main: { ir: "جٰ", la: "J̈", ash: "" },
+      side: { ir: ["3", "۳"], la: ["3", "۳"], ash: [] },
+    },
+    {
+      main: { ir: "خ", la: "X", ash: "" },
+      side: { ir: ["4", "۴"], la: ["4", "۴"], ash: [] },
+    },
+    {
+      main: { ir: "هـ", la: "H", ash: "" },
+      side: { ir: ["5", "۵"], la: ["5", "۵"], ash: [] },
+    },
+    {
+      main: { ir: "غ", la: "Ғ", ash: "" },
+      side: { ir: ["6", "ڠ", "۶"], la: ["6", "۶"], ash: [] },
+      bottom: "ڠ",
+    },
+    {
+      main: { ir: "ٯ", la: "Ŋ", ash: "" },
+      side: { ir: ["7", "۷"], la: ["7", "۷"], ash: [] },
+    },
+    {
+      main: { ir: "ڧ", la: "F", ash: "" },
+      side: { ir: ["8", "۸"], la: ["8", "۸"], ash: [] },
+    },
+    {
+      main: { ir: "ق", la: "Q", ash: "" },
+      side: { ir: ["9", "۹"], la: ["9", "۹"], ash: [] },
+    },
+    {
+      main: { ir: "ە", la: "E", ash: "" },
+      side: { ir: ["ەٕ", "0", "۰"], la: ["ەٕ", "0", "۰"], ash: [] },
+    },
+    { main: { ir: "ۀ", la: "A", ash: "" }, side: { ir: [], la: [], ash: [] } },
   ],
   [
-    { main: "گ", side: [] },
-    { main: "ک", side: ["ݣ"] },
-    { main: "م", side: [] },
-    { main: "ن", side: [] },
-    { main: "ت", side: [] },
-    { main: "ا", side: ["آ"] },
-    { main: "ب", side: [] },
-    { main: "ل", side: [] },
-    { main: "ي", side: [] },
-    { main: "س", side: [] },
-    { main: "ش", side: [] },
+    { main: { ir: "گ", la: "G", ash: "" }, side: { ir: [], la: [], ash: [] } },
+    {
+      main: { ir: "ک", la: "K", ash: "" },
+      side: { ir: ["ݣ"], la: ["K̈"], ash: [] },
+    },
+    { main: { ir: "م", la: "M", ash: "" }, side: { ir: [], la: [], ash: [] } },
+    { main: { ir: "ن", la: "N", ash: "" }, side: { ir: [], la: [], ash: [] } },
+    { main: { ir: "ت", la: "T", ash: "" }, side: { ir: [], la: [], ash: [] } },
+    {
+      main: { ir: "ا", la: "Ȧ", ash: "" },
+      side: { ir: ["آ"], la: ["Ä"], ash: [] },
+    },
+    { main: { ir: "ب", la: "B", ash: "" }, side: { ir: [], la: [], ash: [] } },
+    { main: { ir: "ل", la: "L", ash: "" }, side: { ir: [], la: [], ash: [] } },
+    { main: { ir: "ي", la: "I", ash: "" }, side: { ir: [], la: [], ash: [] } },
+    { main: { ir: "س", la: "S", ash: "" }, side: { ir: [], la: [], ash: [] } },
+    { main: { ir: "ش", la: "S̈", ash: "" }, side: { ir: [], la: [], ash: [] } },
   ],
   [
-    { main: "remove", side: [] },
-    { main: "پ", side: ["ݐ"] },
-    { main: "و", side: [] },
-    { main: "ۋ", side: [] },
-    { main: "ۈ", side: ["ۊ"] },
-    { main: "د", side: ["ڌ"] },
-    { main: "ر", side: [] },
-    { main: "ز", side: ["ژ"] },
-    { main: "ې", side: ["ࢨ"] },
-    { main: "ئ", side: [] },
-    { main: "ۇ", side: ["ؤ"] },
+    {
+      main: { ir: "remove", la: "remove", ash: "remove" },
+      side: { ir: [], la: [], ash: [] },
+    },
+    {
+      main: { ir: "پ", la: "P", ash: "" },
+      side: { ir: ["ݐ"], la: ["P̈"], ash: [] },
+    },
+    { main: { ir: "و", la: "V", ash: "" }, side: { ir: [], la: [], ash: [] } },
+    { main: { ir: "ۋ", la: "W", ash: "" }, side: { ir: [], la: [], ash: [] } },
+    {
+      main: { ir: "ۈ", la: "U", ash: "" },
+      side: { ir: ["ۊ"], la: ["Ü"], ash: [] },
+    },
+    {
+      main: { ir: "د", la: "D", ash: "" },
+      side: { ir: ["ڌ"], la: ["D̈"], ash: [] },
+    },
+    { main: { ir: "ر", la: "R", ash: "" }, side: { ir: [], la: [], ash: [] } },
+    {
+      main: { ir: "ز", la: "Z", ash: "" },
+      side: { ir: ["ژ"], la: ["Z̈"], ash: [] },
+    },
+    {
+      main: { ir: "ې", la: "Y", ash: "" },
+      side: { ir: ["ࢨ"], la: ["Ï"], ash: [] },
+    },
+    { main: { ir: "ئ", la: "É", ash: "" }, side: { ir: [], la: [], ash: [] } },
+    {
+      main: { ir: "ۇ", la: "O", ash: "" },
+      side: { ir: ["ؤ"], la: ["Ꜵ"], ash: [] },
+    },
   ],
 ];
 

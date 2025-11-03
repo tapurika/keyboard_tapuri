@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router";
 
-import Layout from "@/Layout/index";
+// import Layout from "@/Layout/index";
 
 import ROUTES from "./routes";
 

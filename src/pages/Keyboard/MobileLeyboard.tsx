@@ -4,6 +4,8 @@ import clsx from "clsx";
 import { Mobile_WORD, extraRow } from "./constants";
 import { useSetTimeout } from "@/hooks/useSetTimeout";
 
+type langType = "ir" | "la" | "ash";
+
 const styles = {
   root: `
     w-full h-[calc(100vh-150px)]
@@ -12,6 +14,7 @@ const styles = {
     text-gray-800 font-serif font-bold 
   `,
   textarea: `
+    mt-2
     font-iranYekan-400
     flex-1
     p-3
@@ -97,16 +100,31 @@ const textStorage = {
     localStorage.setItem("text-area-words", newText),
 };
 
+const LANG = {
+  ir: "ir", // iran east dabire
+  la: "la", // latin dabire
+  ash: "ash", // ashkani dabire
+};
+
 export default function MobileKeyboard() {
   const { isTimeout, switchTime } = useSetTimeout(1500);
   const [text, setText] = useState("");
   const [showOptions, setShowOptions] = useState<null | string>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [currentLang, setCurrentLang] = useState<langType>(LANG.ir as langType);
+  const [capsActive, setCapsActive] = useState(false);
 
-  const handleClickCopy = () => {
-    console.log(textStorage.getText());
+  const handleClickCopy = async () => {
+    // Select the text field
+    //  textareaRef.current!.select();
+    // textareaRef.current!.setSelectionRange(0, 99999); // For mobile devices
 
-    if (!isTimeout) switchTime();
+    try {
+      await navigator.clipboard.writeText(text);
+      if (!isTimeout) switchTime();
+    } catch (error: unknown) {
+      console.error(error);
+    }
   };
 
   const handleKeyPress = (key: string) => {
@@ -118,19 +136,53 @@ export default function MobileKeyboard() {
   };
 
   const handleExtra = (action: string) => {
-    if (action === "enter") insertTextAtCursor("\n");
-    if (action === "space") insertTextAtCursor(" ");
-    if (action === "half-space") insertTextAtCursor("\u200C");
-    if (action === "dot") insertTextAtCursor(".");
-    if (action === "comma") insertTextAtCursor(",");
+    switch (action) {
+      case "enter":
+        insertTextAtCursor("\n");
+        break;
+
+      case "space":
+        insertTextAtCursor(" ");
+        break;
+
+      case "half-space":
+        insertTextAtCursor("\u200C");
+        break;
+
+      case "caps":
+        setCapsActive((data) => !data);
+        break;
+
+      case "dot":
+        insertTextAtCursor(".");
+        break;
+
+      case "comma":
+        insertTextAtCursor(",");
+        break;
+
+      case "lang":
+        if (LANG.ir == currentLang) setCurrentLang(LANG.la as langType);
+        if (LANG.la == currentLang) setCurrentLang(LANG.ir as langType);
+        // if (LANG.ir == currentLang) setCurrentLang(LANG.la as langType);
+        break;
+
+      default:
+        break;
+    }
   };
 
-  // const handleFixButton = () => setFixed(!fixed);
   const handleText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
     textStorage.setText(e.target.value);
   };
   const insertTextAtCursor = (char: string) => {
+    if (currentLang === "la") {
+      if (!capsActive) {
+        char = char.toLowerCase();
+      }
+    }
+
     const textarea = textareaRef.current;
     if (!textarea) return;
 
@@ -190,14 +242,19 @@ export default function MobileKeyboard() {
       {/* copy button */}
       <button
         type="button"
-        className={clsx(isTimeout ? styles.copyBtnDe : styles.copyBtn)}
+        className={clsx(
+          isTimeout ? styles.copyBtnDe : styles.copyBtn,
+          "hidden"
+        )}
         disabled={isTimeout}
         onClick={handleClickCopy}
       >
         <img src={"/keyboard_tapuri/images/copy.svg"} alt="copy" width={45} />
-        <span>{isTimeout ? "گپی شد" : "کپی متن"}</span>
+        <span>{isTimeout ? "کپی شد" : "کپی متن"}</span>
       </button>
-
+      <p className="px-3 pt-4 text-gray-500 font-iranYekan-400 text-[14px]">
+        با استفاده از کیبرد طبری متن خود را بنویسید :
+      </p>
       {/* textarea tag */}
       <textarea
         inputMode="none"
@@ -211,10 +268,9 @@ export default function MobileKeyboard() {
 
       {/* keyboard */}
       <div
-        className={`${styles.kbRoot} ${
-          "wrapper fixed bottom-0 left-0 right-0 w-full"
-          // fixed ? "fixed bottom-0 left-0 w-full" : ""
-        }`}
+        className={`${
+          styles.kbRoot
+        } ${"wrapper fixed bottom-0 left-0 right-0 w-full"}`}
       >
         {Mobile_WORD.map((row, i) => (
           <div key={i} className={styles.keyRoot}>
@@ -223,64 +279,66 @@ export default function MobileKeyboard() {
                 key={j}
                 className={styles.keyBox}
                 onClick={() => {
-                  handleKeyPress(key.main === "remove" ? "remove" : key.main);
+                  handleKeyPress(
+                    key.main[currentLang] === "remove"
+                      ? "remove"
+                      : key.main[currentLang]
+                  );
                   setShowOptions(null);
                 }}
                 onMouseDown={() => {
-                  // if (key.main === "remove") startContinuousDelete();
-                  (() => key.side?.length > 0 && setShowOptions(`${i}-${j}`))();
-                }}
-                onMouseUp={() => {
-                  // if (key.main === "remove") stopContinuousDelete();
-                  // setShowOptions(null);
-                }}
-                onMouseLeave={() => {
-                  // if (key.main === "remove") stopContinuousDelete();
-                }}
-                onTouchStart={() => {
-                  // if (key.main === "remove") startContinuousDelete();
+                  (() =>
+                    key.side[currentLang]?.length > 0 &&
+                    setShowOptions(`${i}-${j}`))();
                 }}
                 onTouchEnd={() => {
-                  // if (key.main === "remove") stopContinuousDelete();
-                  (() => key.side?.length > 0 && setShowOptions(`${i}-${j}`))();
+                  (() =>
+                    key.side[currentLang]?.length > 0 &&
+                    setShowOptions(`${i}-${j}`))();
                 }}
               >
                 <span className={styles.keyMain}>
-                  {/* {key.main === "remove" ? "⌫" : key.main} */}
-                  {key.main === "remove" ? "⌦" : key.main}
+                  {key.main[currentLang] === "remove"
+                    ? currentLang === "ir"
+                      ? "⌦"
+                      : "⌫"
+                    : capsActive
+                    ? key.main[currentLang]
+                    : key.main[currentLang].toLocaleLowerCase()}
                 </span>
-                {key.side && key.side[0] && (
+                {key.side[currentLang] && key.side[currentLang][0] && (
                   <span className="absolute top-1 right-1 text-xs text-gray-500">
-                    {key.side[0]}
+                    {capsActive
+                      ? key.side[currentLang][0]
+                      : key.side[currentLang][0].toLocaleLowerCase()}
                   </span>
                 )}
-                {key.bottom && (
+                {key.bottom && currentLang === "ir" && (
                   <span className="absolute bottom-1 right-1 text-xs text-gray-500">
                     {key.bottom}
                   </span>
                 )}
-                {showOptions === `${i}-${j}` && key.side.length > 0 && (
-                  <div className="absolute bottom-16 bg-white border rounded-lg shadow-lg p-1 flex space-x-1 animate-fadeIn">
-                    {key.side.map(
-                      (s, idx) =>
-                        s && (
-                          <span
-                            key={idx}
-                            className="px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded cursor-pointer"
-                            onClick={(e) => {
-                              e.stopPropagation(); //syntax to stop event bubbling
-                              console.log("ssssss:", s);
-                              // insertTextAtCursor(s);
-                              handleKeyPress(s);
-                              setShowOptions(null);
-                            }}
-                          >
-                            {s}
-                          </span>
-                        )
-                    )}
-                  </div>
-                )}
+                {showOptions === `${i}-${j}` &&
+                  key.side[currentLang].length > 0 && (
+                    <div className="absolute bottom-16 bg-white border rounded-lg shadow-lg p-1 flex space-x-1 animate-fadeIn">
+                      {key.side[currentLang].map(
+                        (s, idx) =>
+                          s && (
+                            <span
+                              key={idx}
+                              className="px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded cursor-pointer"
+                              onClick={(e) => {
+                                e.stopPropagation(); //syntax to stop event bubbling
+                                handleKeyPress(s);
+                                setShowOptions(null);
+                              }}
+                            >
+                              {capsActive ? s : s.toLocaleLowerCase()}
+                            </span>
+                          )
+                      )}
+                    </div>
+                  )}
               </div>
             ))}
           </div>
@@ -295,13 +353,55 @@ export default function MobileKeyboard() {
                 "bg-white rounded-[6px] shadow-md flex items-center justify-center flex-1 h-12 cursor-pointer active:bg-gray-200 transition text-lg",
                 btn.cls
               )}
-              onClick={() => handleExtra(btn.action)}
+              onClick={() => {
+                if (currentLang === "la") {
+                  handleExtra(
+                    btn.action === "half-space" ? "caps" : btn.action
+                  );
+                } else {
+                  handleExtra(btn.action);
+                }
+              }}
             >
-              <span className="font-bold">{btn.main}</span>
+              <span className="font-bold">
+                {handleExtraRowText(
+                  btn.action,
+                  btn.main,
+                  capsActive,
+                  currentLang
+                )}
+              </span>
             </div>
           ))}
         </div>
       </div>
     </div>
+  );
+}
+
+function handleExtraRowText(
+  btnAction: string,
+  btnMain: string,
+  capsActive: boolean,
+  currentLang: string
+) {
+  if (currentLang === "la") {
+    if (btnAction === "half-space") {
+      return <CapsSvg active={capsActive} />;
+    } else return btnMain;
+  } else return btnMain;
+}
+
+function CapsSvg({ active }: { active: boolean }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      fill={active ? "blue" : "currentColor"}
+      viewBox="0 0 16 16"
+    >
+      <path d="M7.27 1.047a1 1 0 0 1 1.46 0l6.345 6.77c.6.638.146 1.683-.73 1.683H11.5v1a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-1H1.654C.78 9.5.326 8.455.924 7.816zM4.5 13.5a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1z" />
+    </svg>
   );
 }
