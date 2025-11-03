@@ -15,7 +15,6 @@ const styles = {
   `,
   textarea: `
     mt-2
-    font-iranYekan-400
     flex-1
     p-3
     text-lg
