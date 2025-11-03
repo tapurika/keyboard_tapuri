@@ -88,26 +88,32 @@ const styles = {
   `,
 };
 
+const textStorage = {
+  getText: () => {
+    const result = localStorage.getItem("text-area-words");
+    return result === null ? "" : result;
+  },
+  setText: (newText: string) =>
+    localStorage.setItem("text-area-words", newText),
+};
+
 export default function MobileKeyboard() {
   const { isTimeout, switchTime } = useSetTimeout(1500);
   const [text, setText] = useState("");
-  // const [fixed, setFixed] = useState(false);
-  // const [fixed, setFixed] = useState(true);
   const [showOptions, setShowOptions] = useState<null | string>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const deleteIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const handleClickCopy = () => {
+    console.log(textStorage.getText());
+
     if (!isTimeout) switchTime();
   };
 
   const handleKeyPress = (key: string) => {
     if (key === "remove") {
       deleteLastCharacter();
-      // setText((prev) => prev.slice(0, -1));
     } else {
-      insertTextAtCursor(key);
-      // setText((prev) => prev + key);
+      insertTextAtCursor(key == "هـ" ? "ه" : key);
     }
   };
 
@@ -117,17 +123,13 @@ export default function MobileKeyboard() {
     if (action === "half-space") insertTextAtCursor("\u200C");
     if (action === "dot") insertTextAtCursor(".");
     if (action === "comma") insertTextAtCursor(",");
-    // if (action === "enter") setText((prev) => prev + "\n");
-    // if (action === "space") setText((prev) => prev + " ");
-    // if (action === "half-space") setText((prev) => prev + "\u200C");
-    // if (action === "dot") setText((prev) => prev + ".");
-    // if (action === "comma") setText((prev) => prev + ",");
   };
 
   // const handleFixButton = () => setFixed(!fixed);
-  const handleText = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
+  const handleText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
-
+    textStorage.setText(e.target.value);
+  };
   const insertTextAtCursor = (char: string) => {
     const textarea = textareaRef.current;
     if (!textarea) return;
@@ -137,6 +139,7 @@ export default function MobileKeyboard() {
     const newText = text.substring(0, start) + char + text.substring(end);
 
     setText(newText);
+    textStorage.setText(newText);
 
     // set cursor position after insert text
     setTimeout(() => {
@@ -156,6 +159,7 @@ export default function MobileKeyboard() {
       // Delete single character at cursor position or last character
       const newText = text.substring(0, start - 1) + text.substring(end);
       setText(newText);
+      textStorage.setText(newText);
 
       setTimeout(() => {
         textarea.focus();
@@ -165,6 +169,7 @@ export default function MobileKeyboard() {
       // Delete selected text
       const newText = text.substring(0, start) + text.substring(end);
       setText(newText);
+      textStorage.setText(newText);
 
       setTimeout(() => {
         textarea.focus();
@@ -173,32 +178,11 @@ export default function MobileKeyboard() {
     }
   };
 
-  // Start continuous deletion when mouse down/touch start
-  // const startContinuousDelete = () => {
-  //   // Delete immediately once
-  //   deleteLastCharacter();
-
-  //   // Then set up interval for continuous deletion
-  //   deleteIntervalRef.current = setInterval(() => {
-  //     deleteLastCharacter();
-  //   }, 100); // Adjust speed here (100ms = 10 characters per second)
-  // };
-
-  // // Stop continuous deletion when mouse up/touch end
-  // const stopContinuousDelete = () => {
-  //   if (deleteIntervalRef.current) {
-  //     clearInterval(deleteIntervalRef.current);
-  //     deleteIntervalRef.current = null;
-  //   }
-  // };
-
-  // Clean up interval when component unmounts
   useEffect(() => {
-    return () => {
-      if (deleteIntervalRef.current) {
-        clearInterval(deleteIntervalRef.current);
-      }
-    };
+    const getText = textStorage.getText();
+    if (getText) {
+      setText(getText);
+    }
   }, []);
 
   return (
@@ -224,15 +208,6 @@ export default function MobileKeyboard() {
         value={text}
         onChange={handleText}
       />
-
-      {/* floating button */}
-      {/* <button
-        type="button"
-        onClick={handleFixButton}
-        className={styles.fixButton}
-      >
-        {fixed ? "📌 آزاد" : "📌 چسبیده"}
-      </button> */}
 
       {/* keyboard */}
       <div

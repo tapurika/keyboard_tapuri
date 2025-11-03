@@ -114,10 +114,10 @@ export const TABARI_IR = [
           tabari: "تۀݐ",
           mean: "گرفتن آنی و لحظه‌ای",
         },
-        voice: "/keyboard_tapuri/mp3/alphabet/5- ݐ.ogg",
+        voice: "",
       },
     ],
-    voice: "",
+    voice: "/keyboard_tapuri/mp3/alphabet/5- ݐ.ogg",
   },
   {
     ir: "ت",
@@ -183,7 +183,7 @@ export const TABARI_IR = [
       {
         text: {
           vaje: "اِژقار",
-          tabari: "ٯەجٰغال",
+          tabari: "ٯەجٰغار",
           mean: "آشغال",
         },
         voice: "",

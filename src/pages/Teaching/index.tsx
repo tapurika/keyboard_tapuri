@@ -53,23 +53,29 @@ function AlphabetBox({
   }[];
 }) {
   return (
-    <div className="bg-white py-7 px-2.5 rounded-2xl">
+    <div className="bg-white py-7 px-2.5 rounded-2xl shadow-md">
       <div className="flex flex-col items-center gap-3">
-        <div className="flex items-center gap-4">
-          <span className="font-iranYekan-500 text-[16px]">{num + 1} :</span>
-          <div className="flex items-center gap-2.5 ">
-            <TextBox title="ایرانی :" text={[ir]} className="bg-green-100" />
+        <div className="flex items-center gap-2">
+          <span className="font-iranYekan-500 text-[16px]">{num + 1}:</span>
+          <div className="flex items-center gap-2.5">
+            <TextBox
+              title="ایرانی :"
+              text={[ir]}
+              className="bg-green-100"
+              textCls="text-xl pb-1 text-green-700 font-bold"
+            />
             <TextBox
               title="لاتین :"
               text={[la.toLowerCase(), la]}
               className="bg-green-100"
+              textCls="text-green-700 font-bold"
             />
             <TextBox title="اشکانی :" text={[ash]} className="bg-green-100" />
           </div>
         </div>
 
         <div className="flex items-center">
-          {voice.length && (
+          {Boolean(voice.length) && (
             <audio
               src={voice}
               controls
@@ -98,7 +104,7 @@ function AlphabetBox({
                 className="border-0 w-full"
                 title={"طبری واجه :"}
                 text={[data.text.vaje]}
-                textCls="text-[22px] text-green-500"
+                textCls="text-[20px] text-green-500"
               />
               <TextBox
                 className="border-0 w-full"
@@ -110,7 +116,7 @@ function AlphabetBox({
                 className="border-0 w-full"
                 title={"فـارسـی مـنا :"}
                 text={[data.text.mean]}
-                textCls="text-[22px] text-green-500"
+                textCls="text-[20px] text-green-500"
               />
             </div>
           );
@@ -134,12 +140,12 @@ function TextBox({
   return (
     <div
       className={clsx(
-        "flex items-center gap-2 w-22 h-10 rounded-[8px] py-1.5 ps-2",
+        "flex items-center gap-1 w-[90px] h-10 rounded-[8px] py-1.5 ps-2",
         className
       )}
     >
       <span className="font-iranYekan-500 ">{title}</span>
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-[2px]">
         {text.map((data) => (
           <span className={textCls}>{data}</span>
         ))}
