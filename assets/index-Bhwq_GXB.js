@@ -73,7 +73,6 @@ Please change the parent <Route path="${B}"> to <Route path="${B==="/"?"*":`${B}
     text-gray-800 font-serif font-bold 
   `,textarea:`
     mt-2
-    font-iranYekan-400
     flex-1
     p-3
     text-lg
