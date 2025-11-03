@@ -13,7 +13,7 @@ const ROUTES: IRoutes[] = [
   {
     text: "خانه",
     index: true,
-    Element: HomePage,
+    Element: KeyboardPage,
     path: "",
   },
   {

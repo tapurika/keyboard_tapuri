@@ -9,7 +9,8 @@ export default function AppRoutes() {
     <Routes>
       {ROUTES.map(({ subRoute, index, path, Element }) => {
         return (
-          <Route element={Layout ? <Layout /> : undefined}>
+          // <Route element={Layout ? <Layout /> : undefined}>
+          <Route>
             {subRoute ? (
               <Route
                 key={path}

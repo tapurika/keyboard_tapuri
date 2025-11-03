@@ -1,19 +1,26 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import clsx from "clsx";
+
 import { Mobile_WORD, extraRow } from "./constants";
+import { useSetTimeout } from "@/hooks/useSetTimeout";
 
 const styles = {
   root: `
-    w-full h-screen
+    w-full h-[calc(100vh-150px)]
     flex flex-col
     bg-gray-50
     text-gray-800 font-serif font-bold 
   `,
   textarea: `
+    font-iranYekan-400
     flex-1
     p-3
     text-lg
-    border-none outline-none
+    outline-none
     resize-none
+    placeholder-gray-400
+    border-green-500 border-3
+    max-h-[40%] rounded-xl mx-2
   `,
   fixButton: `
     fixed
@@ -23,84 +30,261 @@ const styles = {
     p-4
     shadow-xl transition
   `,
+  copyBtn: `
+    font-iranYekan-400
+    flex items-center
+    w-[115px]
+    mx-2 my-2
+    bg-gradient-to-r from-green-400 via-green-500 to-green-600
+    hover:bg-gradient-to-br
+    focus:ring-4 focus:outline-none focus:ring-green-300
+    dark:focus:ring-green-800
+    rounded-lg
+    font-medium
+  text-white
+    text-sm
+    text-center
+    cursor-pointer
+  `,
+  copyBtnDe: `
+    opacity-55
+    font-iranYekan-400
+    flex items-center
+    w-[115px]
+    mx-2 my-2
+    bg-gradient-to-r from-gray-400 via-gray-500 to-gray-600
+    hover:bg-gradient-to-br
+    focus:ring-4 focus:outline-none focus:ring-gray-300
+    dark:focus:ring-gray-800
+    rounded-lg
+    font-medium
+  text-white
+    text-sm
+    text-center
+    cursor-default
+  `,
+
+  /** Keyboard */
   kbRoot: `
-  
+    flex flex-col gap-1
+  bg-gray-100
+    border-t border-t-gray-300
+    p-2
+    transition-all duration-300
+  `,
+  keyRoot: `
+    flex gap-[4px] justify-center
+  `,
+  keyBox: `
+    relative
+    flex items-center justify-center
+    w-12 h-12
+    bg-white rounded-[6px] shadow-md
+    cursor-pointer select-none
+    active:bg-gray-200 transition
+  `,
+  keyMain: `
+    text-lg font-bold
   `,
 };
 
 export default function MobileKeyboard() {
+  const { isTimeout, switchTime } = useSetTimeout(1500);
   const [text, setText] = useState("");
-  const [fixed, setFixed] = useState(false);
+  // const [fixed, setFixed] = useState(false);
+  // const [fixed, setFixed] = useState(true);
   const [showOptions, setShowOptions] = useState<null | string>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const deleteIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const handleClickCopy = () => {
+    if (!isTimeout) switchTime();
+  };
 
   const handleKeyPress = (key: string) => {
     if (key === "remove") {
-      setText((prev) => prev.slice(0, -1));
+      deleteLastCharacter();
+      // setText((prev) => prev.slice(0, -1));
     } else {
-      setText((prev) => prev + key);
+      insertTextAtCursor(key);
+      // setText((prev) => prev + key);
     }
   };
 
   const handleExtra = (action: string) => {
-    if (action === "enter") setText((prev) => prev + "\n");
-    if (action === "space") setText((prev) => prev + " ");
-    if (action === "half-space") setText((prev) => prev + "\u200C");
-    if (action === "dot") setText((prev) => prev + ".");
-    if (action === "comma") setText((prev) => prev + ",");
+    if (action === "enter") insertTextAtCursor("\n");
+    if (action === "space") insertTextAtCursor(" ");
+    if (action === "half-space") insertTextAtCursor("\u200C");
+    if (action === "dot") insertTextAtCursor(".");
+    if (action === "comma") insertTextAtCursor(",");
+    // if (action === "enter") setText((prev) => prev + "\n");
+    // if (action === "space") setText((prev) => prev + " ");
+    // if (action === "half-space") setText((prev) => prev + "\u200C");
+    // if (action === "dot") setText((prev) => prev + ".");
+    // if (action === "comma") setText((prev) => prev + ",");
   };
 
-  const handleFixButton = () => setFixed(!fixed);
+  // const handleFixButton = () => setFixed(!fixed);
   const handleText = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
     setText(e.target.value);
 
+  const insertTextAtCursor = (char: string) => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const newText = text.substring(0, start) + char + text.substring(end);
+
+    setText(newText);
+
+    // set cursor position after insert text
+    setTimeout(() => {
+      textarea.focus();
+      textarea.setSelectionRange(start + char.length, start + char.length);
+    }, 0);
+  };
+
+  const deleteLastCharacter = () => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+
+    if (start === end && start > 0) {
+      // Delete single character at cursor position or last character
+      const newText = text.substring(0, start - 1) + text.substring(end);
+      setText(newText);
+
+      setTimeout(() => {
+        textarea.focus();
+        textarea.setSelectionRange(start - 1, start - 1);
+      }, 0);
+    } else if (start !== end) {
+      // Delete selected text
+      const newText = text.substring(0, start) + text.substring(end);
+      setText(newText);
+
+      setTimeout(() => {
+        textarea.focus();
+        textarea.setSelectionRange(start, start);
+      }, 0);
+    }
+  };
+
+  // Start continuous deletion when mouse down/touch start
+  // const startContinuousDelete = () => {
+  //   // Delete immediately once
+  //   deleteLastCharacter();
+
+  //   // Then set up interval for continuous deletion
+  //   deleteIntervalRef.current = setInterval(() => {
+  //     deleteLastCharacter();
+  //   }, 100); // Adjust speed here (100ms = 10 characters per second)
+  // };
+
+  // // Stop continuous deletion when mouse up/touch end
+  // const stopContinuousDelete = () => {
+  //   if (deleteIntervalRef.current) {
+  //     clearInterval(deleteIntervalRef.current);
+  //     deleteIntervalRef.current = null;
+  //   }
+  // };
+
+  // Clean up interval when component unmounts
+  useEffect(() => {
+    return () => {
+      if (deleteIntervalRef.current) {
+        clearInterval(deleteIntervalRef.current);
+      }
+    };
+  }, []);
+
   return (
     <div className={styles.root}>
-      {/* textarea */}
+      {/* copy button */}
+      <button
+        type="button"
+        className={clsx(isTimeout ? styles.copyBtnDe : styles.copyBtn)}
+        disabled={isTimeout}
+        onClick={handleClickCopy}
+      >
+        <img src={"/keyboard_tapuri/images/copy.svg"} alt="copy" width={45} />
+        <span>{isTimeout ? "گپی شد" : "کپی متن"}</span>
+      </button>
+
+      {/* textarea tag */}
       <textarea
+        inputMode="none"
         className={styles.textarea}
+        ref={textareaRef}
         placeholder="اینجا بنویس..."
+        spellCheck="false"
         value={text}
         onChange={handleText}
       />
 
       {/* floating button */}
-      <button
+      {/* <button
         type="button"
         onClick={handleFixButton}
         className={styles.fixButton}
       >
         {fixed ? "📌 آزاد" : "📌 چسبیده"}
-      </button>
+      </button> */}
 
       {/* keyboard */}
       <div
-        className={`bg-gray-100 border-t p-2 transition-all duration-300 ${
-          fixed ? "fixed bottom-0 left-0 w-full" : ""
+        className={`${styles.kbRoot} ${
+          "wrapper fixed bottom-0 left-0 right-0 w-full"
+          // fixed ? "fixed bottom-0 left-0 w-full" : ""
         }`}
       >
         {Mobile_WORD.map((row, i) => (
-          <div key={i} className="flex justify-center mb-2">
+          <div key={i} className={styles.keyRoot}>
             {row.map((key, j) => (
               <div
                 key={j}
-                className="relative bg-white rounded-2xl shadow-md m-1 flex items-center justify-center w-12 h-14 cursor-pointer select-none active:bg-gray-200 transition"
-                onClick={() =>
-                  handleKeyPress(key.main === "remove" ? "remove" : key.main)
-                }
-                onMouseDown={() =>
-                  key.side?.length > 1 && setShowOptions(`${i}-${j}`)
-                }
-                onMouseUp={() => setShowOptions(null)}
+                className={styles.keyBox}
+                onClick={() => {
+                  handleKeyPress(key.main === "remove" ? "remove" : key.main);
+                  setShowOptions(null);
+                }}
+                onMouseDown={() => {
+                  // if (key.main === "remove") startContinuousDelete();
+                  (() => key.side?.length > 0 && setShowOptions(`${i}-${j}`))();
+                }}
+                onMouseUp={() => {
+                  // if (key.main === "remove") stopContinuousDelete();
+                  // setShowOptions(null);
+                }}
+                onMouseLeave={() => {
+                  // if (key.main === "remove") stopContinuousDelete();
+                }}
+                onTouchStart={() => {
+                  // if (key.main === "remove") startContinuousDelete();
+                }}
+                onTouchEnd={() => {
+                  // if (key.main === "remove") stopContinuousDelete();
+                  (() => key.side?.length > 0 && setShowOptions(`${i}-${j}`))();
+                }}
               >
-                <span className="text-lg font-bold">
-                  {key.main === "remove" ? "⌫" : key.main}
+                <span className={styles.keyMain}>
+                  {/* {key.main === "remove" ? "⌫" : key.main} */}
+                  {key.main === "remove" ? "⌦" : key.main}
                 </span>
                 {key.side && key.side[0] && (
                   <span className="absolute top-1 right-1 text-xs text-gray-500">
                     {key.side[0]}
                   </span>
                 )}
-                {showOptions === `${i}-${j}` && key.side.length > 1 && (
+                {key.bottom && (
+                  <span className="absolute bottom-1 right-1 text-xs text-gray-500">
+                    {key.bottom}
+                  </span>
+                )}
+                {showOptions === `${i}-${j}` && key.side.length > 0 && (
                   <div className="absolute bottom-16 bg-white border rounded-lg shadow-lg p-1 flex space-x-1 animate-fadeIn">
                     {key.side.map(
                       (s, idx) =>
@@ -108,7 +292,13 @@ export default function MobileKeyboard() {
                           <span
                             key={idx}
                             className="px-2 py-1 bg-gray-100 hover:bg-gray-200 rounded cursor-pointer"
-                            onClick={() => handleKeyPress(s)}
+                            onClick={(e) => {
+                              e.stopPropagation(); //syntax to stop event bubbling
+                              console.log("ssssss:", s);
+                              // insertTextAtCursor(s);
+                              handleKeyPress(s);
+                              setShowOptions(null);
+                            }}
                           >
                             {s}
                           </span>
@@ -122,14 +312,17 @@ export default function MobileKeyboard() {
         ))}
 
         {/* extra row */}
-        <div className="flex justify-center mt-2">
+        <div className="w-full max-w-[569px] m-auto flex justify-center mt-1 gap-[4px]">
           {extraRow.map((btn, i) => (
             <div
               key={i}
-              className="bg-white rounded-2xl shadow-md m-1 flex items-center justify-center w-16 h-14 cursor-pointer active:bg-gray-200 transition"
+              className={clsx(
+                "bg-white rounded-[6px] shadow-md flex items-center justify-center flex-1 h-12 cursor-pointer active:bg-gray-200 transition text-lg",
+                btn.cls
+              )}
               onClick={() => handleExtra(btn.action)}
             >
-              <span className="text-lg font-bold">{btn.main}</span>
+              <span className="font-bold">{btn.main}</span>
             </div>
           ))}
         </div>
