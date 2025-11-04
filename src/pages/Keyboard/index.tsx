@@ -38,7 +38,7 @@ export default function KeyboardPage() {
     <div className="wrapper rounded-2xl h-screen">
       <div className={styles.box}>
         <h1 className="py-3">کیبرد دبیره‌ی طبری</h1>
-        <h2>تۀبەري &nbsp;&nbsp; کەلي‌لۀتە &nbsp;&nbsp; دۀبيره</h2>
+        <h2>تۀبەري &nbsp;&nbsp; کەليلۀتە &nbsp;&nbsp; دۀبيره</h2>
       </div>
       {/* <div className="text-4xl !font-sans">
         {(TABARI_IR as string[]).map((str) => str + " ")}

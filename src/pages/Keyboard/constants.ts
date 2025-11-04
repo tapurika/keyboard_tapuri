@@ -2,46 +2,49 @@ export const Mobile_WORD = [
   [
     {
       main: { ir: "چ", la: "C", ash: "" },
-      side: { ir: ["1", "۱"], la: ["1", "۱"], ash: [] },
+      side: { ir: [], la: [], ash: [] },
     },
     {
       main: { ir: "ج", la: "J", ash: "" },
-      side: { ir: ["1", "۱"], la: ["1", "۱"], ash: [] },
+      side: { ir: ["۹", "9"], la: ["9", "۹"], ash: [] },
     },
     {
       main: { ir: "جٰ", la: "J̈", ash: "" },
-      side: { ir: ["3", "۳"], la: ["3", "۳"], ash: [] },
+      side: { ir: ["۸", "8"], la: ["8", "۸"], ash: [] },
     },
     {
       main: { ir: "خ", la: "X", ash: "" },
-      side: { ir: ["4", "۴"], la: ["4", "۴"], ash: [] },
+      side: { ir: ["۷", "7"], la: ["7", "۷"], ash: [] },
     },
     {
       main: { ir: "هـ", la: "H", ash: "" },
-      side: { ir: ["5", "۵"], la: ["5", "۵"], ash: [] },
+      side: { ir: ["۶", "6"], la: ["6", "۶"], ash: [] },
     },
     {
       main: { ir: "غ", la: "Ғ", ash: "" },
-      side: { ir: ["6", "ڠ", "۶"], la: ["6", "۶"], ash: [] },
+      side: { ir: ["۵", "5", "ڠ"], la: ["5", "۵"], ash: [] },
       bottom: "ڠ",
     },
     {
       main: { ir: "ٯ", la: "Ŋ", ash: "" },
-      side: { ir: ["7", "۷"], la: ["7", "۷"], ash: [] },
+      side: { ir: ["۴", "4"], la: ["4", "۴"], ash: [] },
     },
     {
       main: { ir: "ڧ", la: "F", ash: "" },
-      side: { ir: ["8", "۸"], la: ["8", "۸"], ash: [] },
+      side: { ir: ["۳", "3"], la: ["3", "۸"], ash: [] },
     },
     {
       main: { ir: "ق", la: "Q", ash: "" },
-      side: { ir: ["9", "۹"], la: ["9", "۹"], ash: [] },
+      side: { ir: ["۲", "2"], la: ["2", "۲"], ash: [] },
     },
     {
       main: { ir: "ە", la: "E", ash: "" },
-      side: { ir: ["ەٕ", "0", "۰"], la: ["0", "۰"], ash: [] },
+      side: { ir: ["۱", "1", "ەٕ"], la: ["1", "۱"], ash: [], bottom: "ەٕ" },
     },
-    { main: { ir: "ۀ", la: "A", ash: "" }, side: { ir: [], la: [], ash: [] } },
+    {
+      main: { ir: "ۀ", la: "A", ash: "" },
+      side: { ir: ["۰", "0"], la: ["0", "۰"], ash: [] },
+    },
   ],
   [
     { main: { ir: "گ", la: "G", ash: "" }, side: { ir: [], la: [], ash: [] } },

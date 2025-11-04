@@ -237,7 +237,12 @@ export default function MobileKeyboard() {
   }, []);
 
   return (
-    <div className={styles.root}>
+    <div
+      className={styles.root}
+      onClick={() => {
+        setShowOptions(null);
+      }}
+    >
       {/* copy button */}
       <button
         type="button"
