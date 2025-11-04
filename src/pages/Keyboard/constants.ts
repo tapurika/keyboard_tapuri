@@ -39,7 +39,7 @@ export const Mobile_WORD = [
     },
     {
       main: { ir: "ە", la: "E", ash: "" },
-      side: { ir: ["ەٕ", "0", "۰"], la: ["ەٕ", "0", "۰"], ash: [] },
+      side: { ir: ["ەٕ", "0", "۰"], la: ["0", "۰"], ash: [] },
     },
     { main: { ir: "ۀ", la: "A", ash: "" }, side: { ir: [], la: [], ash: [] } },
   ],
