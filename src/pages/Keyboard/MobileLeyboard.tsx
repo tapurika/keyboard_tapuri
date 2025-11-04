@@ -3,6 +3,7 @@ import clsx from "clsx";
 
 import { Mobile_WORD, extraRow } from "./constants";
 import { useSetTimeout } from "@/hooks/useSetTimeout";
+import RadioButton from "@/components/RadioButton";
 
 type langType = "ir" | "la" | "ash";
 
@@ -256,7 +257,33 @@ export default function MobileKeyboard() {
         <img src={"/keyboard_tapuri/images/copy.svg"} alt="copy" width={45} />
         <span>{isTimeout ? "کپی شد" : "کپی متن"}</span>
       </button>
-      <p className="px-3 pt-4 text-gray-500 font-iranYekan-400 text-[14px]">
+      {/* choose language */}
+
+      {
+        <RadioButton
+          className="flex items-center gap-3 px-3 pt-4"
+          getValue={(name) => {
+            if (currentLang) {
+              setCurrentLang(name as langType);
+            }
+          }}
+          radios={[
+            {
+              name: "ir",
+              label: "مشرقی",
+              checked: true,
+            },
+            {
+              name: "la",
+              label: "لاتین",
+              checked: false,
+            },
+          ]}
+        />
+      }
+
+      {/* Title of textarea */}
+      <p className="px-3 text-gray-500 font-iranYekan-400 text-[14px]">
         با استفاده از کیبرد طبری متن خود را بنویسید :
       </p>
       {/* textarea tag */}
@@ -269,7 +296,6 @@ export default function MobileKeyboard() {
         value={text}
         onChange={handleText}
       />
-
       {/* keyboard */}
       <div
         className={`${
