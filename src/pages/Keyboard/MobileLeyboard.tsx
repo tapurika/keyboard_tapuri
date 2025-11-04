@@ -149,6 +149,16 @@ export default function MobileKeyboard() {
   };
 
   const handleExtra = (action: string) => {
+    const handleCurrentLang = (lan: string) => {
+      // setCheckListRadios;
+      const value = checkListRadios.map((data) => ({
+        ...data,
+        checked: data.name === lan,
+      }));
+
+      setCheckListRadios([...value]);
+    };
+
     switch (action) {
       case "enter":
         insertTextAtCursor("\n");
@@ -175,8 +185,14 @@ export default function MobileKeyboard() {
         break;
 
       case "lang":
-        if (LANG.ir == currentLang) setCurrentLang(LANG.la as langType);
-        if (LANG.la == currentLang) setCurrentLang(LANG.ir as langType);
+        if (LANG.ir == currentLang) {
+          setCurrentLang(LANG.la as langType);
+          handleCurrentLang(LANG.la);
+        }
+        if (LANG.la == currentLang) {
+          setCurrentLang(LANG.ir as langType);
+          handleCurrentLang(LANG.ir);
+        }
         // if (LANG.ir == currentLang) setCurrentLang(LANG.la as langType);
         break;
 
