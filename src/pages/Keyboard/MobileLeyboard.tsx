@@ -117,7 +117,7 @@ export default function MobileKeyboard() {
   const [checkListRadios, setCheckListRadios] = useState([
     {
       name: "ir",
-      label: "مشرقی",
+      label: "مشرقی (ایرانی)",
       checked: true,
     },
     {
