@@ -365,9 +365,14 @@ export default function MobileKeyboard() {
                       : key.side[currentLang][0].toLocaleLowerCase()}
                   </span>
                 )}
-                {key.bottom && currentLang === "ir" && (
+                {key?.bottom && (
                   <span className="absolute bottom-1 right-1 text-xs text-gray-500">
-                    {key.bottom}
+                    {(() => {
+                      const result =
+                        currentLang == "ir" ? key.bottom.ir : key.bottom.la;
+
+                      return capsActive ? result : result.toLocaleLowerCase();
+                    })()}
                   </span>
                 )}
                 {showOptions === `${i}-${j}` &&

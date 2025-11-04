@@ -23,7 +23,7 @@ export const Mobile_WORD = [
     {
       main: { ir: "غ", la: "Ғ", ash: "" },
       side: { ir: ["۵", "5", "ڠ"], la: ["5", "۵"], ash: [] },
-      bottom: "ڠ",
+      bottom: { ir: "ڠ", la: "" },
     },
     {
       main: { ir: "ٯ", la: "Ŋ", ash: "" },
@@ -39,7 +39,8 @@ export const Mobile_WORD = [
     },
     {
       main: { ir: "ە", la: "E", ash: "" },
-      side: { ir: ["۱", "1", "ەٕ"], la: ["1", "۱"], ash: [], bottom: "ەٕ" },
+      side: { ir: ["۱", "1", "ەٕ"], la: ["1", "۱", "Ë"], ash: [] },
+      bottom: { ir: "ەٕ", la: "Ë" },
     },
     {
       main: { ir: "ۀ", la: "A", ash: "" },
