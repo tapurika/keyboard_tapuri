@@ -261,7 +261,8 @@ export default function MobileKeyboard() {
 
       {
         <RadioButton
-          className="flex items-center gap-3 px-3 pt-4"
+          title={"انتخاب دبیره‌ی طبری :"}
+          className="flex items-center gap-3 px-3 pt-3"
           getValue={(name) => {
             if (currentLang) {
               setCurrentLang(name as langType);

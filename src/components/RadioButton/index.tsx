@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React, { useState } from "react";
 
 type IRadios = {
@@ -6,14 +7,19 @@ type IRadios = {
   checked: boolean;
 }[];
 interface IRadioButton {
+  title: string;
   className?: string;
   radios: IRadios;
   getValue: (name: string) => void;
 }
 
 const styles = {
+  wrapper: `
+    font-extrabold font-iranYekan-400
+  `,
   root: `
-  flex items-center mb-4
+    flex items-center
+    mb-2
   `,
   input: `
     w-4 h-4
@@ -23,15 +29,17 @@ const styles = {
     dark:ring-offset-gray-800
     focus:ring-2
     dark:bg-gray-700 dark:border-gray-600
+ 
   `,
   label: `
     ms-2
-    text-sm font-medium
-    text-gray-900 dark:text-gray-300
+    text-[15px] 
+    text-gray-600 dark:text-gray-300
   `,
 };
 
 export default function RadioButton({
+  title,
   radios,
   className,
   getValue,
@@ -39,7 +47,8 @@ export default function RadioButton({
   const [checkList, setCheckList] = useState(radios);
 
   return (
-    <div className={className}>
+    <div className={clsx(styles.wrapper, className)}>
+      <h2 className="pb-2">{title}</h2>
       {radios.map(({ name, label }, i) => (
         <div className={styles.root}>
           <input

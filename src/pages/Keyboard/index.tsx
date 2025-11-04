@@ -27,7 +27,7 @@ const TABS = [
 const styles = {
   box: `
     flex flex-col justify-center items-center
-    pb-5 text-2xl
+    pb-4 text-[22px]
     bg-green-600
     font-iranYekan-900
   `,
