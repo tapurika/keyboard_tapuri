@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import React, { useState } from "react";
 
 type IRadios = {
   name: string;
@@ -9,7 +8,8 @@ type IRadios = {
 interface IRadioButton {
   title: string;
   className?: string;
-  radios: IRadios;
+  checkList: IRadios;
+  setCheckList: (data: IRadios) => void;
   getValue: (name: string) => void;
 }
 
@@ -29,7 +29,6 @@ const styles = {
     dark:ring-offset-gray-800
     focus:ring-2
     dark:bg-gray-700 dark:border-gray-600
- 
   `,
   label: `
     ms-2
@@ -39,17 +38,16 @@ const styles = {
 };
 
 export default function RadioButton({
+  checkList,
+  setCheckList,
   title,
-  radios,
   className,
   getValue,
 }: IRadioButton) {
-  const [checkList, setCheckList] = useState(radios);
-
   return (
     <div className={clsx(styles.wrapper, className)}>
       <h2 className="pb-2">{title}</h2>
-      {radios.map(({ name, label }, i) => (
+      {checkList.map(({ name, label }, i) => (
         <div className={styles.root}>
           <input
             id={name}
@@ -66,7 +64,6 @@ export default function RadioButton({
                 }));
 
                 setCheckList([...value]);
-
                 getValue(name);
               }
             }}

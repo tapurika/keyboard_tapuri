@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { Mobile_WORD, extraRow } from "./constants";
 import { useSetTimeout } from "@/hooks/useSetTimeout";
 import RadioButton from "@/components/RadioButton";
+import CapsSvg from "./CapsSvg";
 
 type langType = "ir" | "la" | "ash";
 
@@ -113,6 +114,18 @@ export default function MobileKeyboard() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [currentLang, setCurrentLang] = useState<langType>(LANG.ir as langType);
   const [capsActive, setCapsActive] = useState(false);
+  const [checkListRadios, setCheckListRadios] = useState([
+    {
+      name: "ir",
+      label: "مشرقی",
+      checked: true,
+    },
+    {
+      name: "la",
+      label: "لاتین",
+      checked: false,
+    },
+  ]);
 
   const handleClickCopy = async () => {
     // Select the text field
@@ -263,23 +276,15 @@ export default function MobileKeyboard() {
         <RadioButton
           title={"انتخاب دبیره‌ی طبری :"}
           className="flex items-center gap-3 px-3 pt-3"
+          checkList={checkListRadios}
+          setCheckList={(data) => {
+            setCheckListRadios(data);
+          }}
           getValue={(name) => {
             if (currentLang) {
               setCurrentLang(name as langType);
             }
           }}
-          radios={[
-            {
-              name: "ir",
-              label: "مشرقی",
-              checked: true,
-            },
-            {
-              name: "la",
-              label: "لاتین",
-              checked: false,
-            },
-          ]}
         />
       }
 
@@ -421,18 +426,4 @@ function handleExtraRowText(
       return <CapsSvg active={capsActive} />;
     } else return btnMain;
   } else return btnMain;
-}
-
-function CapsSvg({ active }: { active: boolean }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      fill={active ? "blue" : "currentColor"}
-      viewBox="0 0 16 16"
-    >
-      <path d="M7.27 1.047a1 1 0 0 1 1.46 0l6.345 6.77c.6.638.146 1.683-.73 1.683H11.5v1a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-1H1.654C.78 9.5.326 8.455.924 7.816zM4.5 13.5a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1z" />
-    </svg>
-  );
 }
